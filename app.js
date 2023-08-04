@@ -37,11 +37,11 @@ app.get('/api/token', async (req, res) => {
 
 app.post('/api/token', async (req, res) => {
     try {
-        const { cartLink, buyLink, telegramLink, contractAddress } = req.body;
+        const { cartLink, buyLink, telegramLink, contractAddress, pinkSale } = req.body;
         const token = await Token.findOne();
         if (!token) {
             // If no token data exists, create a new entry with the provided data
-            const newToken = new Token({ cartLink, buyLink, telegramLink, contractAddress });
+            const newToken = new Token({ cartLink, buyLink, telegramLink, contractAddre, pinkSale });
             await newToken.save();
             res.json(newToken);
         } else {
@@ -50,6 +50,7 @@ app.post('/api/token', async (req, res) => {
             token.buyLink = buyLink;
             token.telegramLink = telegramLink;
             token.contractAddress = contractAddress;
+            token.pinkSale = pinkSale;
             await token.save();
             res.json(token);
         }
